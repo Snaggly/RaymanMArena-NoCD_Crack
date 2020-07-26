@@ -63,6 +63,7 @@ namespace RaymanMArena_NoCD_Crack
         //Methods
         private bool Validate(string FileToCheck)
         {
+            //Yeah I could have handled it so much better... This entire code is a disgrace
             //Rayman M
             patcher = new Patcher(FileToCheck, PatchNode.OffsetM, PatchNode.OriginalM, PatchNode.PatchedM);
             
@@ -91,6 +92,23 @@ namespace RaymanMArena_NoCD_Crack
             else if (patcher.IsAlreadyPatched())
             {
                 patcher.ToPatchBytes = PatchNode.OriginalA;
+                UnlockUnCrackButton();
+                return true;
+            }
+
+            //Rayman M Obscure the first 
+            patcher.Offset = PatchNode.OffsetUbiExFocus;
+            patcher.OriginalBytes = PatchNode.OriginalUbiExFocus;
+            patcher.ToPatchBytes = PatchNode.PatchedUbiExFocus;
+
+            if (patcher.IsPatchable)
+            {
+                UnlockCrackButton();
+                return true;
+            }
+            else if (patcher.IsAlreadyPatched())
+            { //I'm cringing so hard on this
+                patcher.ToPatchBytes = PatchNode.OriginalUbiExFocus;
                 UnlockUnCrackButton();
                 return true;
             }
